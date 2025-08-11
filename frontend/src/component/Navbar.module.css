@@ -1,44 +1,85 @@
 .navbar {
-    height: 4rem;
-    width: 100%;
-    background-color: black;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 4rem;
+  height: 4rem;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.6); /* translucent white */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 3rem;
+  color: black; /* dark text for contrast */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-.navbar > * {
-    color: white;
+.brand {
+  font-size: 1.8rem;
+  font-weight: 900;
 }
 
-.username a {
-    color: white;
-    text-decoration: none;
+.brand a {
+  color: #2c2c2c; /* dark grey */
+  text-decoration: none;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+.brand a:hover {
+  color: #667eea; /* subtle blue on hover */
+}
+
+.username {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-right: 1.5rem;
+  white-space: nowrap;
+  user-select: none;
+  color: #222; /* dark text */
 }
 
 .auth {
-    width: 15%;
-    display: flex;
-    justify-content: flex-end;
-    gap: 6rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .authBtn a {
-    color: white;
-    text-decoration: none;
-    font-size: 1.4rem;
+  color: #222;
+  text-decoration: none;
+  font-size: 1.3rem;
+  padding: 0.4rem 1rem;
+  border-radius: 1.5rem;
+  border: 1.5px solid #222;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+}
+
+.authBtn a:hover {
+  background-color: #667eea;
+  color: white;
+  border-color: #667eea;
 }
 
 .logoutBtn {
-    background-color: transparent;
-    outline: none;
-    border: none;
-    color: white;
-    font-size: 1.3rem;
+  background-color: transparent;
+  outline: none;
+  border: 1.5px solid #222;
+  color: #222;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.4rem 1rem;
+  border-radius: 1.5rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
 }
 
-.logoutBtn a {
-    color: white;
-    text-decoration: none;
+.logoutBtn:hover {
+  background-color: #667eea;
+  color: white;
+  border-color: #667eea;
 }

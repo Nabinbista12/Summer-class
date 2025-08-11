@@ -11,8 +11,24 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    requird: true,
+    required: true,
   },
+  companyName: {
+    type: String,
+    default: "",
+  },
+  bio: {
+    type: String,
+    default: "",
+  },
+  skills: {
+    type: [String],
+    default: [],
+  },
+  connections: [{
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  }],
   createdAt: {
     type: Date,
     default: Date.now,

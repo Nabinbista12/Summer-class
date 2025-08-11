@@ -30,11 +30,15 @@ export default function Navbar() {
 
   return (
     <div className={styles.navbar}>
-      <h1 className={styles.username}>
-        <Link to="/">Welcome {username ? username : "Guest"}</Link>
+      {/* Fixed brand name on left */}
+      <h1 className={styles.brand}>
+        <Link to="/">TalentCrew</Link>
       </h1>
 
       <div className={styles.auth}>
+        {/* Username alone before profile */}
+        {username && <span className={styles.username}>{username}</span>}
+
         {!username ? (
           <>
             <div className={styles.authBtn}>

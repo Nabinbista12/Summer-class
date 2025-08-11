@@ -1,3 +1,12 @@
+// Public: Get all users for cards (no sensitive info)
+export const getAllUsersPublic = async (req, res) => {
+  try {
+    const users = await User.find({}, "_id username email companyName bio");
+    return res.status(200).json({ users });
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching users." });
+  }
+};
 // Update user profile
 export const updateUserProfile = async (req, res) => {
   try {
@@ -56,9 +65,10 @@ export const getUser = async (req, res) => {
 export const userInfo = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log(req.params);
+    // console.log(req.params);
     const user = await User.findById(id);
-    console.log(req.query.id);
+    // console.log(req.query.id);
+    console.log(user);
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });

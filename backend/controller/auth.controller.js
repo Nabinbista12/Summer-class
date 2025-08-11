@@ -7,10 +7,10 @@ import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
   try {
-    console.log("Register path hit");
+    // console.log("Register path hit");
     let { username, email, password } = req.body;
 
-    console.log(username, email, password);
+    // console.log(username, email, password);
 
     const checkUsername = await User.findOne({ username: username });
     const checkEmail = await User.findOne({ email: email });
@@ -23,20 +23,20 @@ export const register = async (req, res) => {
         });
     }
 
-    console.log(checkEmail);
-    console.log(checkUsername);
+    // console.log(checkEmail);
+    // console.log(checkUsername);
 
     password = await bcrypt.hash(password, 10);
 
-    console.log(password);
+    // console.log(password);
 
     const user = new User({ username, email, password });
 
-    console.log("user saved");
+    // console.log("user saved");
     await user.save();
 
-    console.log(user);
-    console.log("ok");
+    // console.log(user);
+    // console.log("ok");
 
     const userToken = jwt.sign(
       { id: user._id, username: user.username },
@@ -46,7 +46,7 @@ export const register = async (req, res) => {
       }
     );
 
-    console.log(user);
+    // console.log(user);
 
     return res
       .status(201)

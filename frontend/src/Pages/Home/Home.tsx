@@ -5,8 +5,10 @@ import Navbar from "../../component/Navbar";
 import axios from "axios";
 
 interface UserType {
+  _id: string;
   username: string;
-  email: string;
+  companyName?: string;
+  bio?: string;
 }
 
 
@@ -42,7 +44,7 @@ export default function Home() {
 
   const getAllUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/user/all-users");
+      const res = await axios.get("http://localhost:3000/api/user/public-users");
       setUsers(res.data.users);
     } catch (err) {
       console.log("Error occurred while fetching all users", err);
@@ -53,8 +55,8 @@ export default function Home() {
     getAllUsers();
   }, []);
 
-  const handleCardClick = (username: string) => {
-    navigate(`/user/${username}`);
+  const handleCardClick = (id: string) => {
+    navigate(`/user/${id}`);
   };
 
   return (
@@ -92,15 +94,15 @@ export default function Home() {
           </p>
         )}
 
-        {users.map((val, key) => (
+        {users.map((val) => (
           <div
             className={styles.searchCard}
-            key={key}
-            onClick={() => handleCardClick(val.username)}
+            key={val._id}
+            onClick={() => handleCardClick(val._id)}
             role="button"
             tabIndex={0}
             onKeyDown={(e) => {
-              if (e.key === "Enter") handleCardClick(val.username);
+              if (e.key === "Enter") handleCardClick(val._id);
             }}
           >
             <div className={styles.profile}>
@@ -108,20 +110,12 @@ export default function Home() {
                 src={`https://ui-avatars.com/api/?name=${val.username}&background=4a47a3&color=fff&size=64`}
                 alt={`${val.username} profile`}
               />
-              <h3 className={styles.name}>{val.username}</h3>
-              <p className={styles.companyName}>XYZ company</p>
+              <div>
+                <h3 className={styles.name}>{val.username}</h3>
+                <p className={styles.companyName}>{val.companyName || 'No company'}</p>
+              </div>
             </div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis
-              possimus vel vitae dolor reiciendis quo mollitia dolores ipsam,
-              minima suscipit esse omnis! Harum vitae eaque perspiciatis eum
-              sunt quibusdam vel?
-            </p>
-            <div className={styles.btn}>
-              <button type="button">React</button>
-              <button type="button">Node</button>
-              <button type="button">Mongo</button>
-            </div>
+            <p>{val.bio || 'No detail provided.'}</p>
           </div>
         ))}
       </div>

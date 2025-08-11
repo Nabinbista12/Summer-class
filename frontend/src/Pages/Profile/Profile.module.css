@@ -1,8 +1,16 @@
 /* Container for whole profile card */
+
 .container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f6fa;
+}
+
+.profileCard {
   width: 100%;
   max-width: 480px;
-  margin: 5rem auto;
   background: #fff;
   padding: 2.5rem 3rem;
   border-radius: 2rem;
@@ -12,6 +20,19 @@
   align-items: center;
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.email {
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  color: #333;
+  background: #f7f9fc;
+  border-radius: 1rem;
+  box-shadow: inset 0 0 6px #dde6f1;
+  font-weight: 600;
+  padding: 0.7rem 1.2rem;
+  width: 100%;
+  text-align: center;
 }
 
 /* Profile picture styling */

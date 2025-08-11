@@ -5,6 +5,8 @@ import Register from "./Feature/Register/Register";
 import Home from "./Pages/Home/Home";
 import Profile from "./Pages/Profile/Profile";
 
+import UserProfile from "./Pages/UserProfile/UserProfile";
+
 import {
   LoginProtectedRoute,
   ProtectedRoute,
@@ -44,6 +46,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/user/:id"
+            element={
+              <ProtectedRoute>
+                <UserProfile />
               </ProtectedRoute>
             }
           ></Route>

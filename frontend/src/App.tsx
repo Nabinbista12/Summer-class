@@ -12,6 +12,7 @@ import {
   ProtectedRoute,
 } from "./Shared/Guard/ProtectedRoute";
 import Network from "./Pages/Network/Network";
+import Careers from "./Pages/Careers/Careers";
 
 function App() {
   return (
@@ -66,6 +67,7 @@ function App() {
               </ProtectedRoute>
             }
           ></Route>
+          <Route path="/careers" element={<Careers />} />
         </Routes>
       </Router>
     </>

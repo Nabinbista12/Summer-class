@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../../component/Navbar";
+import Footer from "../../component/Footer";
 
 export default function UserProfile() {
   const { id } = useParams();
@@ -66,39 +67,43 @@ export default function UserProfile() {
             </button>
           )}
 
-          {/* Experience Skeleton */}
-          {/* Experience Section */}
+          {/* --- Skills Section --- */}
+          <div style={{ width: '100%', margin: '1.5rem 0' }}>
+            <h3 className={styles.sectionTitle}>Skills</h3>
+            <div className={styles.badgeList}>
+              {user.skills && user.skills.length > 0 ? (
+                user.skills.map((skill: string) => (
+                  <span key={skill} className={styles.badge}>{skill}</span>
+                ))
+              ) : (
+                <span style={{ color: '#aaa' }}>No skills added</span>
+              )}
+            </div>
+          </div>
+
+          {/* --- Experience Section --- */}
           <div className={styles.experienceSection}>
             <h3 className={styles.sectionTitle}>Experience</h3>
-
-            <div className={styles.experienceItem}>
-              <h4 className={styles.experienceRole}>Frontend Developer</h4>
-              <p className={styles.experienceCompany}>TechNova Pvt. Ltd.</p>
-              <span className={styles.experienceDuration}>
-                Jan 2023 – Present
-              </span>
-              <p className={styles.experienceDescription}>
-                Building responsive and dynamic web applications using React,
-                TypeScript, and Tailwind CSS.
-              </p>
-            </div>
-
-            <div className={styles.experienceItem}>
-              <h4 className={styles.experienceRole}>
-                Intern - Web Development
-              </h4>
-              <p className={styles.experienceCompany}>CodeCrafters Inc.</p>
-              <span className={styles.experienceDuration}>
-                Aug 2022 – Dec 2022
-              </span>
-              <p className={styles.experienceDescription}>
-                Assisted in developing internal tools, fixed bugs, and
-                implemented new UI features for client projects.
-              </p>
-            </div>
+            {user.experience && user.experience.length > 0 ? (
+              <div className={styles.expList}>
+                {user.experience.map((exp: any, idx: number) => (
+                  <div key={idx} className={styles.experienceItem}>
+                    <h4 className={styles.experienceRole}>{exp.title}</h4>
+                    <p className={styles.experienceCompany}>{exp.company}</p>
+                    <span className={styles.experienceDuration}>{exp.years} yrs</span>
+                    {exp.description && (
+                      <p className={styles.experienceDescription}>{exp.description}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <span style={{ color: '#aaa' }}>No experience added</span>
+            )}
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

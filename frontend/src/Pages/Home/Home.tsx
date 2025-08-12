@@ -10,6 +10,7 @@ interface UserType {
   username: string;
   companyName?: string;
   bio?: string;
+  skills?: string[];
 }
 
 
@@ -112,6 +113,14 @@ export default function Home() {
               </div>
             </div>
             <p>{val.bio || 'No detail provided.'}</p>
+            {/* Skills as badges */}
+            {val.skills && val.skills.length > 0 && (
+              <div style={{ marginTop: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                {val.skills.map((skill) => (
+                  <span key={skill} style={{ background: '#4a47a3', color: '#fff', borderRadius: '0.7rem', padding: '0.2rem 0.8rem', fontSize: '0.9rem', fontWeight: 500 }}>{skill}</span>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>

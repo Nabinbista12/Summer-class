@@ -1,7 +1,5 @@
-
-
 import { useState, useEffect } from "react";
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, FormEvent } from "react";
 import Navbar from "../../component/Navbar";
 import Footer from "../../component/Footer";
 import styles from "./Profile.module.css";
@@ -13,6 +11,11 @@ export default function Profile() {
   const loggedInId = localStorage.getItem("userId");
   const [user, setUser] = useState<any>(null);
   const [editData, setEditData] = useState({ companyName: "", bio: "" });
+  const [skills, setSkills] = useState<string[]>([]);
+  const [newSkill, setNewSkill] = useState("");
+  const [experience, setExperience] = useState<any[]>([]);
+  const [expForm, setExpForm] = useState({ title: "", company: "", years: "", description: "" });
+  const [expError, setExpError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -39,7 +42,8 @@ export default function Profile() {
           companyName: res.data.user.companyName || "",
           bio: res.data.user.bio || "",
         });
-        console.log(res);
+        setSkills(res.data.user.skills || []);
+        setExperience(res.data.user.experience || []);
       } catch (err: any) {
         setError("Failed to load user profile. " + (err?.response?.data?.message || err.message));
       } finally {
@@ -62,10 +66,11 @@ export default function Profile() {
     }
     try {
       setLoading(true);
-      await axios.put(`http://localhost:3000/api/user/user-info/${loggedInId}`, editData, {
-        headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
-      });
-      setUser((prev: any) => ({ ...prev, ...editData }));
+      await axios.put(`http://localhost:3000/api/user/user-info/${loggedInId}`,
+        { ...editData, skills, experience },
+        { headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` } }
+      );
+      setUser((prev: any) => ({ ...prev, ...editData, skills, experience }));
       setIsEditing(false);
       setSuccess("Profile updated successfully!");
       setTimeout(() => setSuccess(""), 2000);
@@ -74,6 +79,36 @@ export default function Profile() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Skills logic
+  const handleSkillAdd = (e: FormEvent) => {
+    e.preventDefault();
+    const skill = newSkill.trim();
+    if (!skill || skills.includes(skill)) return;
+    setSkills([...skills, skill]);
+    setNewSkill("");
+  };
+  const handleSkillRemove = (skill: string) => {
+    setSkills(skills.filter(s => s !== skill));
+  };
+
+  // Experience logic
+  const handleExpChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setExpForm(curr => ({ ...curr, [e.target.name]: e.target.value }));
+  };
+  const handleExpAdd = (e: FormEvent) => {
+    e.preventDefault();
+    if (!expForm.title || !expForm.company || !expForm.years || isNaN(Number(expForm.years))) {
+      setExpError("All fields required and years must be a number");
+      return;
+    }
+    setExperience([...experience, { ...expForm, years: Number(expForm.years) }]);
+    setExpForm({ title: "", company: "", years: "", description: "" });
+    setExpError("");
+  };
+  const handleExpRemove = (idx: number) => {
+    setExperience(experience.filter((_, i) => i !== idx));
   };
 
   if (loading) return <div className={styles.profile}><Navbar /><div className={styles.container}>Loading...</div></div>;
@@ -114,6 +149,57 @@ export default function Profile() {
                   style={{ resize: "vertical", fontSize: "1.1rem", padding: "0.8rem 1.2rem", borderRadius: "1.2rem", border: "2px solid #cbd5e1" }}
                 />
               </div>
+              {/* --- Skills Section --- */}
+              <div style={{ width: '100%', margin: '1.5rem 0' }}>
+                <h3 style={{ fontSize: '1.3rem', color: '#667eea', marginBottom: '0.7rem', fontWeight: 700 }}>Skills</h3>
+                <div className={styles.badgeList}>
+                  {skills.length > 0 ? (
+                    skills.map(skill => (
+                      <span key={skill} className={styles.badge}>
+                        {skill}
+                        <button type="button" className={styles.badgeRemove} onClick={() => handleSkillRemove(skill)}>&times;</button>
+                      </span>
+                    ))
+                  ) : (
+                    <span style={{ color: '#aaa' }}>No skills added</span>
+                  )}
+                </div>
+                <div className={styles.skillForm}>
+                  <input
+                    type="text"
+                    value={newSkill}
+                    onChange={e => setNewSkill(e.target.value)}
+                    placeholder="Add skill"
+                    onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); handleSkillAdd(e as any); } }}
+                  />
+                  <button type="button" className={styles.addBtn} onClick={handleSkillAdd}>Add</button>
+                </div>
+              </div>
+              {/* --- Experience Section --- */}
+              <div style={{ width: '100%', margin: '1.5rem 0' }}>
+                <h3 style={{ fontSize: '1.3rem', color: '#667eea', marginBottom: '0.7rem', fontWeight: 700 }}>Experience</h3>
+                <div>
+                  {experience.length > 0 ? (
+                    experience.map((exp, idx) => (
+                      <div key={idx} className={styles.expCard} style={{ background: '#f7f9fc', borderRadius: '1rem', marginBottom: '1rem', padding: '1rem 1.2rem' }}>
+                        <span className={styles.expTitle} style={{ color: '#4a47a3', fontWeight: 600 }}>{exp.title}</span> at <span className={styles.expCompany}>{exp.company}</span> ({exp.years} yrs)
+                        <span className={styles.expDesc} style={{ display: 'block', color: '#555', marginTop: '0.3rem' }}>{exp.description}</span>
+                        <button type="button" className={styles.badgeRemove} onClick={() => handleExpRemove(idx)}>&times;</button>
+                      </div>
+                    ))
+                  ) : (
+                    <span style={{ color: '#aaa' }}>No experience added</span>
+                  )}
+                </div>
+                <div className={styles.expForm}>
+                  <input type="text" name="title" value={expForm.title} onChange={handleExpChange} placeholder="Title" />
+                  <input type="text" name="company" value={expForm.company} onChange={handleExpChange} placeholder="Company" />
+                  <input type="number" name="years" value={expForm.years} onChange={handleExpChange} placeholder="Years" min="0" />
+                  <input type="text" name="description" value={expForm.description} onChange={handleExpChange} placeholder="Description (optional)" />
+                  <button type="button" className={styles.addBtn} onClick={handleExpAdd}>Add</button>
+                </div>
+                {expError && <div className={styles.error}>{expError}</div>}
+              </div>
               <div className={styles.btnGroup}>
                 <button type="button" className={styles.saveBtn} onClick={handleSave}>
                   Save
@@ -127,6 +213,35 @@ export default function Profile() {
             <div className={styles.detailView}>
               <p><strong>Company Name:</strong> {user.companyName || <span style={{ color: '#aaa' }}>Not set</span>}</p>
               <p><strong>Bio:</strong> {user.bio || <span style={{ color: '#aaa' }}>No bio provided</span>}</p>
+              {/* --- Skills Section --- */}
+              <div style={{ width: '100%', margin: '1.5rem 0' }}>
+                <h3 style={{ fontSize: '1.3rem', color: '#667eea', marginBottom: '0.7rem', fontWeight: 700 }}>Skills</h3>
+                <div className={styles.badgeList}>
+                  {user.skills && user.skills.length > 0 ? (
+                    user.skills.map((skill: string) => (
+                      <span key={skill} className={styles.badge}>{skill}</span>
+                    ))
+                  ) : (
+                    <span style={{ color: '#aaa' }}>No skills added</span>
+                  )}
+                </div>
+              </div>
+              {/* --- Experience Section --- */}
+              <div style={{ width: '100%', margin: '1.5rem 0' }}>
+                <h3 style={{ fontSize: '1.3rem', color: '#667eea', marginBottom: '0.7rem', fontWeight: 700 }}>Experience</h3>
+                <div>
+                  {user.experience && user.experience.length > 0 ? (
+                    user.experience.map((exp: any, idx: number) => (
+                      <div key={idx} className={styles.expCard} style={{ background: '#f7f9fc', borderRadius: '1rem', marginBottom: '1rem', padding: '1rem 1.2rem' }}>
+                        <span className={styles.expTitle} style={{ color: '#4a47a3', fontWeight: 600 }}>{exp.title}</span> at <span className={styles.expCompany}>{exp.company}</span> ({exp.years} yrs)
+                        <span className={styles.expDesc} style={{ display: 'block', color: '#555', marginTop: '0.3rem' }}>{exp.description}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <span style={{ color: '#aaa' }}>No experience added</span>
+                  )}
+                </div>
+              </div>
               <button className={styles.editBtn} onClick={toggleEdit}>
                 Edit
               </button>

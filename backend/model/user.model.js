@@ -25,6 +25,14 @@ const userSchema = new Schema({
     type: [String],
     default: [],
   },
+  experience: [
+    {
+      title: { type: String, required: true },
+      company: { type: String, required: true },
+      years: { type: Number, required: true },
+      description: { type: String, default: "" },
+    }
+  ],
   connections: [{
     type: Schema.Types.ObjectId,
     ref: "User",

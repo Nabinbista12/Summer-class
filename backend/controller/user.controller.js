@@ -1,7 +1,7 @@
 // Public: Get all users for cards (no sensitive info)
 export const getAllUsersPublic = async (req, res) => {
   try {
-    const users = await User.find({}, "_id username email companyName bio");
+    const users = await User.find({}, "_id username email companyName bio skills experience");
     return res.status(200).json({ users });
   } catch (err) {
     res.status(500).json({ message: "Error fetching users." });
@@ -16,7 +16,7 @@ export const updateUserProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    return res.status(200).json({ message: "User updated", user });
+    return res.status(200).json({ message: "Profile edited successfully! Thank you for the edit.", user });
   } catch (err) {
     res.status(500).json({ message: "Error updating user profile." });
   }
@@ -65,15 +65,10 @@ export const getUser = async (req, res) => {
 export const userInfo = async (req, res) => {
   try {
     const { id } = req.params;
-    // console.log(req.params);
-    const user = await User.findById(id);
-    // console.log(req.query.id);
-    console.log(user);
-
+    const user = await User.findById(id, "_id username email companyName bio skills experience");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     return res.status(200).json({ message: "User found", user });
   } catch (err) {
     res.status(404).json({ message: "Error occured while fetching data." });

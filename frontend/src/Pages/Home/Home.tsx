@@ -2,6 +2,7 @@ import { useEffect, useState, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 import Navbar from "../../component/Navbar";
+import Footer from "../../component/Footer";
 import axios from "axios";
 
 interface UserType {
@@ -62,7 +63,6 @@ export default function Home() {
   return (
     <div className={styles.homeContainer}>
       <Navbar />
-
       <div className={styles.container}>
         <div className={styles.search}>
           <input
@@ -75,25 +75,21 @@ export default function Home() {
           />
           <i className="fa-solid fa-magnifying-glass" />
         </div>
-
         <div className={styles.projectInfo}>
-          <span>TalentConnect</span>
+          <span>TalentCrew</span>
           Search Talent Recruiter
         </div>
       </div>
-
       <div className={styles.filterBar}>
         <p className={styles.result}>{users.length} result(s) found</p>
         <button className={styles.filter}>Filter</button>
       </div>
-
       <div className={styles.SearchResult}>
         {users.length === 0 && (
           <p style={{ color: "black", marginTop: "2rem", fontWeight: "600" }}>
             No users found.
           </p>
         )}
-
         {users.map((val) => (
           <div
             className={styles.searchCard}
@@ -119,6 +115,7 @@ export default function Home() {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 }

@@ -11,6 +11,7 @@ import {
   LoginProtectedRoute,
   ProtectedRoute,
 } from "./Shared/Guard/ProtectedRoute";
+import Network from "./Pages/Network/Network";
 
 function App() {
   return (
@@ -54,6 +55,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <UserProfile />
+              </ProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/mynetwork"
+            element={
+              <ProtectedRoute>
+                <Network />
               </ProtectedRoute>
             }
           ></Route>

@@ -1,10 +1,10 @@
-
 .container {
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background: #f4f6fa;
+	padding: 2rem;
 }
 
 .profileCard {
@@ -16,7 +16,8 @@
 	flex-direction: column;
 	align-items: center;
 	min-width: 340px;
-	max-width: 400px;
+	max-width: 500px;
+	width: 100%;
 }
 
 .profileAvatar {
@@ -26,6 +27,7 @@
 	margin-bottom: 1.5rem;
 	border: 4px solid #4a47a3;
 	background: #eaeaea;
+	object-fit: cover;
 }
 
 .username {
@@ -39,6 +41,7 @@
 	font-size: 1.1rem;
 	margin-bottom: 0.5rem;
 	color: #333;
+	text-align: center;
 }
 
 .editBtn {
@@ -51,8 +54,78 @@
 	font-size: 1rem;
 	font-weight: 600;
 	cursor: pointer;
-	transition: background 0.2s;
+	transition: background 0.2s, transform 0.1s;
 }
 .editBtn:hover {
 	background: #38357a;
+	transform: translateY(-2px);
+}
+
+.experienceSection {
+	margin-top: 2rem;
+	width: 100%;
+	padding-top: 1rem;
+	border-top: 1px solid #e0e0e0;
+}
+
+.sectionTitle {
+	font-size: 1.5rem;
+	font-weight: 700;
+	color: #4a47a3;
+	margin-bottom: 1.5rem;
+	text-align: left;
+}
+
+/* === Experience Items as Timeline === */
+.experienceItem {
+	position: relative;
+	padding: 1rem 1.2rem 1rem 2.5rem;
+	margin-bottom: 1.5rem;
+	background: #f9f9fb;
+	border-radius: 0.8rem;
+	box-shadow: 0 2px 8px rgba(74, 71, 163, 0.08);
+	transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.experienceItem:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(74, 71, 163, 0.15);
+}
+
+.experienceItem::before {
+	content: "";
+	position: absolute;
+	left: 0.8rem;
+	top: 1.2rem;
+	width: 12px;
+	height: 12px;
+	background: #4a47a3;
+	border-radius: 50%;
+	box-shadow: 0 0 0 3px #dcdcf4;
+}
+
+.experienceRole {
+	font-size: 1.2rem;
+	font-weight: 600;
+	color: #4a47a3;
+	margin-bottom: 0.2rem;
+}
+
+.experienceCompany {
+	font-size: 1rem;
+	font-weight: 500;
+	color: #333;
+	margin-bottom: 0.2rem;
+}
+
+.experienceDuration {
+	font-size: 0.9rem;
+	color: #777;
+	display: block;
+	margin-bottom: 0.5rem;
+}
+
+.experienceDescription {
+	font-size: 0.95rem;
+	line-height: 1.5;
+	color: #555;
 }

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
 import Navbar from "../../component/Navbar";
+import Footer from "../../component/Footer";
 import styles from "./Profile.module.css";
 import axios from "axios";
 // import { useParams } from "react-router-dom";
@@ -134,6 +135,7 @@ export default function Profile() {
           {success && <div style={{ color: '#38a169', marginTop: '1rem', fontWeight: 600 }}>{success}</div>}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

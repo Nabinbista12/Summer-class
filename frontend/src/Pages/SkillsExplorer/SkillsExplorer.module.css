@@ -1,0 +1,83 @@
+.container {
+  max-width: 900px;
+  margin: 3rem auto 2rem;
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(74, 71, 163, 0.12);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.heading {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #4a47a3;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.searchInput {
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto 2rem auto;
+  display: block;
+  padding: 0.7rem 1.2rem;
+  border-radius: 1rem;
+  border: 2px solid #cbd5e1;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.skillsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.skillBtn {
+  background: #4a47a3;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.skillBtn:hover, .selected {
+  background: #38357a;
+}
+
+.usersSection {
+  margin-top: 2.5rem;
+}
+
+.usersList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.userCard {
+  background: #f4f6fa;
+  border-radius: 1rem;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 8px rgba(74, 71, 163, 0.08);
+}
+.userCard strong {
+  color: #4a47a3;
+  font-size: 1.1rem;
+}
+.userCard span {
+  color: #555;
+  font-size: 0.98rem;
+}
+.userBio {
+  color: #333;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}

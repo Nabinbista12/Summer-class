@@ -53,6 +53,9 @@ export default function Navbar() {
             <button className={styles.logoutBtn}>
               <Link to="/profile">Profile</Link>
             </button>
+            <button className={styles.logoutBtn}>
+              <Link to="/mynetwork">My Network</Link>
+            </button>
             <button className={styles.logoutBtn} onClick={handleLogout}>
               Logout
             </button>

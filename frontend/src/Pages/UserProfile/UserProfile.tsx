@@ -68,15 +68,17 @@ export default function UserProfile() {
           )}
 
           {/* --- Skills Section --- */}
-          <div style={{ width: '100%', margin: '1.5rem 0' }}>
+          <div style={{ width: "100%", margin: "1.5rem 0" }}>
             <h3 className={styles.sectionTitle}>Skills</h3>
             <div className={styles.badgeList}>
               {user.skills && user.skills.length > 0 ? (
                 user.skills.map((skill: string) => (
-                  <span key={skill} className={styles.badge}>{skill}</span>
+                  <span key={skill} className={styles.badge}>
+                    {skill}
+                  </span>
                 ))
               ) : (
-                <span style={{ color: '#aaa' }}>No skills added</span>
+                <span style={{ color: "#aaa" }}>No skills added</span>
               )}
             </div>
           </div>
@@ -90,15 +92,19 @@ export default function UserProfile() {
                   <div key={idx} className={styles.experienceItem}>
                     <h4 className={styles.experienceRole}>{exp.title}</h4>
                     <p className={styles.experienceCompany}>{exp.company}</p>
-                    <span className={styles.experienceDuration}>{exp.years} yrs</span>
+                    <span className={styles.experienceDuration}>
+                      {exp.years} yrs
+                    </span>
                     {exp.description && (
-                      <p className={styles.experienceDescription}>{exp.description}</p>
+                      <p className={styles.experienceDescription}>
+                        {exp.description}
+                      </p>
                     )}
                   </div>
                 ))}
               </div>
             ) : (
-              <span style={{ color: '#aaa' }}>No experience added</span>
+              <span style={{ color: "#aaa" }}>No experience added</span>
             )}
           </div>
         </div>

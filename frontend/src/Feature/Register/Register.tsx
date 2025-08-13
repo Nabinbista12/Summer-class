@@ -11,6 +11,7 @@ export default function Register() {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFieldData((curr) => {
@@ -20,6 +21,27 @@ export default function Register() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!fieldData.username.trim()) {
+      setError("Username is required.");
+      return;
+    } else if (!fieldData.email.trim()) {
+      setError("Email is required.");
+      return;
+    } else if (!fieldData.password.trim()) {
+      setError("Password is required.");
+      return;
+    }
+    // Simple email regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(fieldData.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (fieldData.password.length < 6) {
+      setError("Password must be at least 6 characters.");
+      return;
+    }
+    setError("");
     try {
       const success = await RegisterAPI(fieldData);
       if (success) {
@@ -42,6 +64,17 @@ export default function Register() {
       <div className={styles.registerContainer}>
         <div className={styles.formContainer}>
           <form className={styles.form} onSubmit={handleSubmit}>
+            {error && (
+              <div
+                style={{
+                  color: "#e53e3e",
+                  marginBottom: "0.7rem",
+                  fontWeight: 600,
+                }}
+              >
+                {error}
+              </div>
+            )}
             <h1 className={styles.registerHeading}>Register</h1>
             <div className={styles.inputField}>
               <label htmlFor="username">Username</label>
@@ -66,7 +99,7 @@ export default function Register() {
             <div className={styles.inputField}>
               <label htmlFor="password">Password</label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 value={fieldData.password}

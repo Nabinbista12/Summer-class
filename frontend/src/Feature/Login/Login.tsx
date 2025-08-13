@@ -12,6 +12,8 @@ export default function Login() {
     password: "",
   });
 
+  const [error, setError] = useState("");
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFieldData((curr) => {
       return { ...curr, [e.target.name]: e.target.value };
@@ -20,6 +22,14 @@ export default function Login() {
 
   const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!fieldData.username.trim()) {
+      setError("Username is required.");
+      return;
+    } else if (!fieldData.password.trim()) {
+      setError("Password is required.")
+      return;
+    }
+    setError("");
     try {
       const result = await LoginAPI(fieldData);
       console.log(result);
@@ -44,6 +54,7 @@ export default function Login() {
         <div className={styles.formContainer}>
         <h1 className={styles.loginHeading}>Login</h1>
           <form className={styles.form} onSubmit={handleSubmit}>
+            {error && <div style={{color: '#e53e3e', marginBottom: '0.7rem', fontWeight: 600}}>{error}</div>}
             <div className={styles.inputField}>
               <label htmlFor="username">Username</label>
               <input
@@ -57,7 +68,7 @@ export default function Login() {
             <div className={styles.inputField}>
               <label htmlFor="password">Password</label>
               <input
-                type="text"
+                type="password"
                 name="password"
                 id="password"
                 value={fieldData.password}

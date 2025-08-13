@@ -1,10 +1,8 @@
-/* Section container for skills and experience */
 .sectionContainer {
   width: 100%;
   margin: 1.5rem 0;
 }
 
-/* Section heading (Skills, Experience) */
 .sectionHeading {
   font-size: 1.3rem;
   color: #667eea;
@@ -12,30 +10,28 @@
   font-weight: 700;
 }
 
-/* Faded text for empty states */
 .fadedText {
   color: #aaa;
 }
 
-/* Success message */
 .successMsg {
   color: #38a169;
   margin-top: 1rem;
   font-weight: 600;
 }
-/* Container for whole profile card */
+
 .container {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #f4f6fa;
-  padding-bottom: 3rem; /* space between container bottom and footer */
+  padding: 1rem 0 3rem 0;
 }
 
 .profileCard {
   width: 100%;
-  max-width: 600px; /* Increased from 480px */
+  max-width: 800px; 
   background: #fff;
   padding: 2.5rem 3rem;
   border-radius: 2rem;
@@ -45,7 +41,7 @@
   align-items: center;
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  margin-bottom: 3rem; /* Space before footer */
+  margin-bottom: 3rem; 
 }
 
 .email {
@@ -61,7 +57,6 @@
   text-align: center;
 }
 
-/* Profile picture styling */
 .profilePicture img {
   width: 110px;
   height: 110px;
@@ -73,7 +68,6 @@
   user-select: none;
 }
 
-/* Username style */
 .username {
   font-size: 2.2rem;
   font-weight: 700;
@@ -82,7 +76,6 @@
   user-select: none;
 }
 
-/* Detail view styles */
 .detailView {
   width: 100%;
   display: flex;
@@ -145,10 +138,12 @@
   gap: 0.7rem;
   background: #f0f4ff;
   border-radius: 1rem;
-  padding: 1rem 1.5rem; /* increased horizontal padding */
+  padding: 1rem 1.5rem;
   box-shadow: 0 1px 4px #dde6f1;
-  margin-bottom: 0; /* gap handled by container */
+  margin-bottom: 0;
   box-sizing: border-box;
+  /* width: 80%; */
+  /* display: flex-start; */
 }
 
 /* Labels */

@@ -192,27 +192,11 @@ export default function Profile() {
                   value={editData.bio}
                   onChange={handleChange}
                   rows={4}
-                  style={{
-                    resize: "vertical",
-                    fontSize: "1.1rem",
-                    padding: "0.8rem 1.2rem",
-                    borderRadius: "1.2rem",
-                    border: "2px solid #cbd5e1",
-                  }}
                 />
               </div>
               {/* --- Skills Section --- */}
-              <div style={{ width: "100%", margin: "1.5rem 0" }}>
-                <h3
-                  style={{
-                    fontSize: "1.3rem",
-                    color: "#667eea",
-                    marginBottom: "0.7rem",
-                    fontWeight: 700,
-                  }}
-                >
-                  Skills
-                </h3>
+              <div className={styles.sectionContainer}>
+                <h3 className={styles.sectionHeading}>Skills</h3>
                 <div className={styles.badgeList}>
                   {skills.length > 0 ? (
                     skills.map((skill) => (
@@ -228,7 +212,7 @@ export default function Profile() {
                       </span>
                     ))
                   ) : (
-                    <span style={{ color: "#aaa" }}>No skills added</span>
+                    <span className={styles.fadedText}>No skills added</span>
                   )}
                 </div>
                 <div className={styles.skillForm}>
@@ -254,33 +238,17 @@ export default function Profile() {
                 </div>
               </div>
               {/* --- Experience Section --- */}
-              <div style={{ width: "100%", margin: "1.5rem 0" }}>
-                <h3
-                  style={{
-                    fontSize: "1.3rem",
-                    color: "#667eea",
-                    marginBottom: "0.7rem",
-                    fontWeight: 700,
-                  }}
-                >
-                  Experience
-                </h3>
+              <div className={styles.sectionContainer}>
+                <h3 className={styles.sectionHeading}>Experience</h3>
                 <div>
                   {experience.length > 0 ? (
                     experience.map((exp, idx) => (
                       <div
                         key={idx}
                         className={styles.expCard}
-                        style={{
-                          background: "#f7f9fc",
-                          borderRadius: "1rem",
-                          marginBottom: "1rem",
-                          padding: "1rem 1.2rem",
-                        }}
                       >
                         <span
                           className={styles.expTitle}
-                          style={{ color: "#4a47a3", fontWeight: 600 }}
                         >
                           {exp.title}
                         </span>{" "}
@@ -289,11 +257,6 @@ export default function Profile() {
                         ({exp.years} yrs)
                         <span
                           className={styles.expDesc}
-                          style={{
-                            display: "block",
-                            color: "#555",
-                            marginTop: "0.3rem",
-                          }}
                         >
                           {exp.description}
                         </span>
@@ -307,7 +270,7 @@ export default function Profile() {
                       </div>
                     ))
                   ) : (
-                    <span style={{ color: "#aaa" }}>No experience added</span>
+                    <span className={styles.fadedText}>No experience added</span>
                   )}
                 </div>
                 <div className={styles.expForm}>
@@ -382,17 +345,8 @@ export default function Profile() {
                 )}
               </p>
               {/* --- Skills Section --- */}
-              <div style={{ width: "100%", margin: "1.5rem 0" }}>
-                <h3
-                  style={{
-                    fontSize: "1.3rem",
-                    color: "#667eea",
-                    marginBottom: "0.7rem",
-                    fontWeight: 700,
-                  }}
-                >
-                  Skills
-                </h3>
+              <div className={styles.sectionContainer}>
+                <h3 className={styles.sectionHeading}>Skills</h3>
                 <div className={styles.badgeList}>
                   {user.skills && user.skills.length > 0 ? (
                     user.skills.map((skill: string) => (
@@ -401,38 +355,22 @@ export default function Profile() {
                       </span>
                     ))
                   ) : (
-                    <span style={{ color: "#aaa" }}>No skills added</span>
+                    <span className={styles.fadedText}>No skills added</span>
                   )}
                 </div>
               </div>
               {/* --- Experience Section --- */}
-              <div style={{ width: "100%", margin: "1.5rem 0" }}>
-                <h3
-                  style={{
-                    fontSize: "1.3rem",
-                    color: "#667eea",
-                    marginBottom: "0.7rem",
-                    fontWeight: 700,
-                  }}
-                >
-                  Experience
-                </h3>
+              <div className={styles.sectionContainer}>
+                <h3 className={styles.sectionHeading}>Experience</h3>
                 <div>
                   {user.experience && user.experience.length > 0 ? (
                     user.experience.map((exp: any, idx: number) => (
                       <div
                         key={idx}
                         className={styles.expCard}
-                        style={{
-                          background: "#f7f9fc",
-                          borderRadius: "1rem",
-                          marginBottom: "1rem",
-                          padding: "1rem 1.2rem",
-                        }}
                       >
                         <span
                           className={styles.expTitle}
-                          style={{ color: "#4a47a3", fontWeight: 600 }}
                         >
                           {exp.title}
                         </span>{" "}
@@ -441,18 +379,13 @@ export default function Profile() {
                         ({exp.years} yrs)
                         <span
                           className={styles.expDesc}
-                          style={{
-                            display: "block",
-                            color: "#555",
-                            marginTop: "0.3rem",
-                          }}
                         >
                           {exp.description}
                         </span>
                       </div>
                     ))
                   ) : (
-                    <span style={{ color: "#aaa" }}>No experience added</span>
+                    <span className={styles.fadedText}>No experience added</span>
                   )}
                 </div>
               </div>
@@ -462,11 +395,7 @@ export default function Profile() {
             </div>
           )}
           {success && (
-            <div
-              style={{ color: "#38a169", marginTop: "1rem", fontWeight: 600 }}
-            >
-              {success}
-            </div>
+            <div className={styles.successMsg}>{success}</div>
           )}
         </div>
       </div>

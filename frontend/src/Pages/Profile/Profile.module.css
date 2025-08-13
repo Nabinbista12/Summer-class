@@ -1,3 +1,28 @@
+/* Section container for skills and experience */
+.sectionContainer {
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+/* Section heading (Skills, Experience) */
+.sectionHeading {
+  font-size: 1.3rem;
+  color: #667eea;
+  margin-bottom: 0.7rem;
+  font-weight: 700;
+}
+
+/* Faded text for empty states */
+.fadedText {
+  color: #aaa;
+}
+
+/* Success message */
+.successMsg {
+  color: #38a169;
+  margin-top: 1rem;
+  font-weight: 600;
+}
 /* Container for whole profile card */
 .container {
   min-height: 100vh;

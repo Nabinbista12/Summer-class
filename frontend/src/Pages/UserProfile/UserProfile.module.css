@@ -129,3 +129,24 @@
 	line-height: 1.5;
 	color: #555;
 }
+
+.skillsSection {
+  width: 100%;
+  margin: 1.5rem 0;
+}
+.badgeList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.badge {
+  background: #4a47a3;
+  color: #fff;
+  border-radius: 0.7rem;
+  padding: 0.2rem 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.fadedText {
+  color: #aaa;
+}

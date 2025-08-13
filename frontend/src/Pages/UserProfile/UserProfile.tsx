@@ -68,7 +68,7 @@ export default function UserProfile() {
           )}
 
           {/* --- Skills Section --- */}
-          <div style={{ width: "100%", margin: "1.5rem 0" }}>
+          <div className={styles.skillsSection}>
             <h3 className={styles.sectionTitle}>Skills</h3>
             <div className={styles.badgeList}>
               {user.skills && user.skills.length > 0 ? (
@@ -78,7 +78,7 @@ export default function UserProfile() {
                   </span>
                 ))
               ) : (
-                <span style={{ color: "#aaa" }}>No skills added</span>
+                <span className={styles.fadedText}>No skills added</span>
               )}
             </div>
           </div>
@@ -104,7 +104,7 @@ export default function UserProfile() {
                 ))}
               </div>
             ) : (
-              <span style={{ color: "#aaa" }}>No experience added</span>
+              <span className={styles.fadedText}>No experience added</span>
             )}
           </div>
         </div>

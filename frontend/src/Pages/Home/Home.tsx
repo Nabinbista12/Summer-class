@@ -13,7 +13,6 @@ interface UserType {
   skills?: string[];
 }
 
-
 export default function Home() {
   const navigate = useNavigate();
   const [users, setUsers] = useState<UserType[]>([]);
@@ -46,7 +45,9 @@ export default function Home() {
 
   const getAllUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/user/public-users");
+      const res = await axios.get(
+        "http://localhost:3000/api/user/public-users"
+      );
       setUsers(res.data.users);
     } catch (err) {
       console.log("Error occurred while fetching all users", err);
@@ -87,9 +88,7 @@ export default function Home() {
       </div>
       <div className={styles.SearchResult}>
         {users.length === 0 && (
-          <p style={{ color: "black", marginTop: "2rem", fontWeight: "600" }}>
-            No users found.
-          </p>
+          <p className={styles.noUsers}>No users found.</p>
         )}
         {users.map((val) => (
           <div
@@ -109,15 +108,19 @@ export default function Home() {
               />
               <div>
                 <h3 className={styles.name}>{val.username}</h3>
-                <p className={styles.companyName}>{val.companyName || 'No company'}</p>
+                <p className={styles.companyName}>
+                  {val.companyName || "No company"}
+                </p>
               </div>
             </div>
-            <p>{val.bio || 'No detail provided.'}</p>
+            <p>{val.bio || "No detail provided."}</p>
             {/* Skills as badges */}
             {val.skills && val.skills.length > 0 && (
-              <div style={{ marginTop: '0.5rem', display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+              <div className={styles.skillsBadgeList}>
                 {val.skills.map((skill) => (
-                  <span key={skill} style={{ background: '#4a47a3', color: '#fff', borderRadius: '0.7rem', padding: '0.2rem 0.8rem', fontSize: '0.9rem', fontWeight: 500 }}>{skill}</span>
+                  <span key={skill} className={styles.skillsBadge}>
+                    {skill}
+                  </span>
                 ))}
               </div>
             )}
@@ -128,4 +131,3 @@ export default function Home() {
     </div>
   );
 }
-

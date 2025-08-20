@@ -1,4 +1,3 @@
-// Public: Get all users for cards (no sensitive info)
 export const getAllUsersPublic = async (req, res) => {
   try {
     const users = await User.find({}, "_id username email companyName bio skills experience");
@@ -7,7 +6,7 @@ export const getAllUsersPublic = async (req, res) => {
     res.status(500).json({ message: "Error fetching users." });
   }
 };
-// Update user profile
+
 export const updateUserProfile = async (req, res) => {
   try {
     const { id } = req.params;

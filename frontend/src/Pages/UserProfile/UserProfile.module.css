@@ -1,152 +1,269 @@
+/* Professional User Profile Design */
 .container {
-	min-height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: #f4f6fa;
-	padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #e5e7eb 100%);
+  padding: 2rem 1rem;
+  position: relative;
 }
 
 .profileCard {
-	background: #fff;
-	border-radius: 1.5rem;
-	box-shadow: 0 4px 24px rgba(74, 71, 163, 0.12);
-	padding: 2.5rem 3rem;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	min-width: 500px;
-	max-width: 800px;
-	width: 100%;
+  width: 100%;
+  max-width: 900px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  display: grid;
+  gap: 2rem;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .profileAvatar {
-	width: 120px;
-	height: 120px;
-	border-radius: 50%;
-	margin-bottom: 1.5rem;
-	border: 4px solid #4a47a3;
-	background: #eaeaea;
-	object-fit: cover;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.profileAvatar:hover {
+  transform: scale(1.03);
 }
 
 .username {
-	font-size: 2rem;
-	font-weight: 700;
-	margin-bottom: 0.5rem;
-	color: #4a47a3;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin: 0;
+  letter-spacing: -0.025em;
 }
 
-.email, .company, .bio {
-	font-size: 1.1rem;
-	margin-bottom: 0.5rem;
-	color: #333;
-	text-align: center;
+.email,
+.company,
+.bio {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  color: #2d3748;
+  transition: box-shadow 0.2s ease;
+  text-align: center;
+}
+
+.email:hover,
+.company:hover,
+.bio:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .editBtn {
-	margin-top: 1.2rem;
-	padding: 0.7rem 1.5rem;
-	background: #4a47a3;
-	color: #fff;
-	border: none;
-	border-radius: 0.8rem;
-	font-size: 1rem;
-	font-weight: 600;
-	cursor: pointer;
-	transition: background 0.2s, transform 0.1s;
+  background: #2b6cb0;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  align-self: center;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 12px rgba(43, 108, 176, 0.2);
+  transition: all 0.2s ease;
 }
+
 .editBtn:hover {
-	background: #38357a;
-	transform: translateY(-2px);
+  background: #2c5282;
+  box-shadow: 0 6px 16px rgba(43, 108, 176, 0.3);
+  transform: translateY(-1px);
 }
 
-.experienceSection {
-	margin-top: 2rem;
-	width: 100%;
-	padding-top: 1rem;
-	border-top: 1px solid #e0e0e0;
-}
-
-.sectionTitle {
-	font-size: 1.5rem;
-	font-weight: 700;
-	color: #4a47a3;
-	margin-bottom: 1.5rem;
-	text-align: left;
-}
-
-/* === Experience Items as Timeline === */
-.experienceItem {
-	position: relative;
-	padding: 1rem 1.2rem 1rem 2.5rem;
-	margin-bottom: 1.5rem;
-	background: #f9f9fb;
-	border-radius: 0.8rem;
-	box-shadow: 0 2px 8px rgba(74, 71, 163, 0.08);
-	transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.experienceItem:hover {
-	transform: translateY(-2px);
-	box-shadow: 0 4px 12px rgba(74, 71, 163, 0.15);
-}
-
-.experienceItem::before {
-	content: "";
-	position: absolute;
-	left: 0.8rem;
-	top: 1.2rem;
-	width: 12px;
-	height: 12px;
-	background: #4a47a3;
-	border-radius: 50%;
-	box-shadow: 0 0 0 3px #dcdcf4;
-}
-
-.experienceRole {
-	font-size: 1.2rem;
-	font-weight: 600;
-	color: #4a47a3;
-	margin-bottom: 0.2rem;
-}
-
-.experienceCompany {
-	font-size: 1rem;
-	font-weight: 500;
-	color: #333;
-	margin-bottom: 0.2rem;
-}
-
-.experienceDuration {
-	font-size: 0.9rem;
-	color: #777;
-	display: block;
-	margin-bottom: 0.5rem;
-}
-
-.experienceDescription {
-	font-size: 0.95rem;
-	line-height: 1.5;
-	color: #555;
+.editBtn:active {
+  transform: translateY(0);
 }
 
 .skillsSection {
-  width: 100%;
-  margin: 1.5rem 0;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.sectionTitle::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background: #2b6cb0;
+  border-radius: 1px;
+}
+
 .badgeList {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.75rem;
+  margin: 1rem 0;
 }
+
 .badge {
-  background: #4a47a3;
-  color: #fff;
-  border-radius: 0.7rem;
-  padding: 0.2rem 0.8rem;
+  background: #edf2f7;
+  border: 1px solid #e2e8f0;
+  color: #2d3748;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
   font-size: 0.9rem;
   font-weight: 500;
+  transition: all 0.2s ease;
 }
+
+.badge:hover {
+  background: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
 .fadedText {
-  color: #aaa;
+  color: #718096;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+.experienceSection {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.experienceItem {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.experienceItem:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.experienceRole {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.experienceCompany {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.experienceDuration {
+  color: #718096;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+.experienceDescription {
+  color: #718096;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-top: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .profileCard {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+
+  .username {
+    font-size: 1.75rem;
+  }
+
+  .profileAvatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .skillsSection,
+  .experienceSection {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileCard {
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
+  .username {
+    font-size: 1.5rem;
+  }
+
+  .profileAvatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .email,
+  .company,
+  .bio {
+    padding: 0.75rem 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.1rem;
+  }
+}
+
+/* Loading and Error States */
+.container:has(.error),
+.container:has(.loading) {
+  background: #edf2f7;
+  color: #2d3748;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
 }

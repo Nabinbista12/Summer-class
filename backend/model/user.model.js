@@ -31,12 +31,22 @@ const userSchema = new Schema({
       company: { type: String, required: true },
       years: { type: Number, required: true },
       description: { type: String, default: "" },
-    }
+    },
   ],
-  connections: [{
-    type: Schema.Types.ObjectId,
-    ref: "User",
-  }],
+  profilePicture: {
+    url: {
+      type: String,
+    },
+    public_id: {
+      type: String,
+    },
+  },
+  connections: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,

@@ -1,15 +1,18 @@
 import { useState, useEffect } from "react";
-import type { ChangeEvent, FormEvent } from "react";
 import Navbar from "../../component/Navbar";
 import Footer from "../../component/Footer";
 import styles from "./Profile.module.css";
 import axios from "axios";
-// import { useParams } from "react-router-dom";
+import ProfilePictureUpload from "./ProfilePictureUpload";
+import ProfileForm from "./ProfileForm";
+import SkillsSection from "./SkillsSection";
+import ExperienceSection from "./ExperienceSection";
 
 export default function Profile() {
   const loggedInId = localStorage.getItem("userId");
   const [user, setUser] = useState<any>(null);
   const [editData, setEditData] = useState({ companyName: "", bio: "" });
+  // Profile picture upload logic moved to ProfilePictureUpload component
   const [skills, setSkills] = useState<string[]>([]);
   const [newSkill, setNewSkill] = useState("");
   const [experience, setExperience] = useState<any[]>([]);
@@ -63,10 +66,42 @@ export default function Profile() {
     fetchUser();
   }, [profileId, isEditing]);
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setEditData((curr) => ({ ...curr, [e.target.name]: e.target.value }));
+  };
+
+  const handleProfilePicChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setProfilePicFile(e.target.files[0]);
+    }
+  };
+
+  const handleProfilePicUpload = async () => {
+    if (!profilePicFile) return;
+    setProfilePicUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", profilePicFile);
+      const res = await axios.post(
+        `http://localhost:3000/api/user/profile-picture`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      if (res.data.image?.url) {
+        setUser((prev: any) => ({ ...prev, profilePicture: res.data.image }));
+        setSuccess("Profile picture updated!");
+        setTimeout(() => setSuccess(""), 2000);
+      }
+    } catch (err: any) {
+      setError("Failed to upload profile picture.");
+    } finally {
+      setProfilePicUploading(false);
+    }
   };
 
   const toggleEdit = () => setIsEditing(!isEditing);
@@ -98,7 +133,7 @@ export default function Profile() {
   };
 
   // Skills logic
-  const handleSkillAdd = (e: FormEvent) => {
+  const handleSkillAdd = (e: React.FormEvent) => {
     e.preventDefault();
     const skill = newSkill.trim();
     if (!skill || skills.includes(skill)) return;
@@ -110,26 +145,16 @@ export default function Profile() {
   };
 
   // Experience logic
-  const handleExpChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleExpChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setExpForm((curr) => ({ ...curr, [e.target.name]: e.target.value }));
   };
-  const handleExpAdd = (e: FormEvent) => {
+  const handleExpAdd = (e: React.FormEvent) => {
     e.preventDefault();
-    if (
-      !expForm.title ||
-      !expForm.company ||
-      !expForm.years ||
-      isNaN(Number(expForm.years))
-    ) {
+    if (!expForm.title || !expForm.company || !expForm.years || isNaN(Number(expForm.years))) {
       setExpError("All fields required and years must be a number");
       return;
     }
-    setExperience([
-      ...experience,
-      { ...expForm, years: Number(expForm.years) },
-    ]);
+    setExperience([...experience, { ...expForm, years: Number(expForm.years) }]);
     setExpForm({ title: "", company: "", years: "", description: "" });
     setExpError("");
   };
@@ -158,12 +183,10 @@ export default function Profile() {
       <Navbar />
       <div className={styles.container}>
         <div className={styles.profileCard}>
-          <div className={styles.profilePicture}>
-            <img
-              src={`https://ui-avatars.com/api/?name=${user.username}&background=667eea&color=fff&size=128`}
-              alt="profile img"
-            />
-          </div>
+          <ProfilePictureUpload
+            profilePictureUrl={user.profilePicture?.url}
+            onUploadSuccess={(image) => setUser((prev: any) => ({ ...prev, profilePicture: image }))}
+          />
           <div className={styles.username}>{user.username}</div>
           <div className={styles.email}>
             <strong>Email:</strong> {user.email}
@@ -173,146 +196,24 @@ export default function Profile() {
               className={styles.formContainer}
               onSubmit={(e) => e.preventDefault()}
             >
-              <div className={styles.formField}>
-                <label htmlFor="companyName">Company Name</label>
-                <input
-                  type="text"
-                  name="companyName"
-                  id="companyName"
-                  value={editData.companyName}
-                  onChange={handleChange}
-                  autoFocus
-                />
-              </div>
-              <div className={styles.formField}>
-                <label htmlFor="bio">Bio</label>
-                <textarea
-                  name="bio"
-                  id="bio"
-                  value={editData.bio}
-                  onChange={handleChange}
-                  rows={4}
-                />
-              </div>
+              <ProfileForm editData={editData} onChange={handleChange} />
               {/* --- Skills Section --- */}
-              <div className={styles.sectionContainer}>
-                <h3 className={styles.sectionHeading}>Skills</h3>
-                <div className={styles.badgeList}>
-                  {skills.length > 0 ? (
-                    skills.map((skill) => (
-                      <span key={skill} className={styles.badge}>
-                        {skill}
-                        <button
-                          type="button"
-                          className={styles.badgeRemove}
-                          onClick={() => handleSkillRemove(skill)}
-                        >
-                          &times;
-                        </button>
-                      </span>
-                    ))
-                  ) : (
-                    <span className={styles.fadedText}>No skills added</span>
-                  )}
-                </div>
-                <div className={styles.skillForm}>
-                  <input
-                    type="text"
-                    value={newSkill}
-                    onChange={(e) => setNewSkill(e.target.value)}
-                    placeholder="Add skill"
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleSkillAdd(e as any);
-                      }
-                    }}
-                  />
-                  <button
-                    type="button"
-                    className={styles.addBtn}
-                    onClick={handleSkillAdd}
-                  >
-                    Add
-                  </button>
-                </div>
-              </div>
+              <SkillsSection
+                skills={skills}
+                newSkill={newSkill}
+                onSkillChange={(e) => setNewSkill(e.target.value)}
+                onSkillAdd={handleSkillAdd}
+                onSkillRemove={handleSkillRemove}
+              />
               {/* --- Experience Section --- */}
-              <div className={styles.sectionContainer}>
-                <h3 className={styles.sectionHeading}>Experience</h3>
-                <div>
-                  {experience.length > 0 ? (
-                    experience.map((exp, idx) => (
-                      <div
-                        key={idx}
-                        className={styles.expCard}
-                      >
-                        <span
-                          className={styles.expTitle}
-                        >
-                          {exp.title}
-                        </span>{" "}
-                        at{" "}
-                        <span className={styles.expCompany}>{exp.company}</span>{" "}
-                        ({exp.years} yrs)
-                        <span
-                          className={styles.expDesc}
-                        >
-                          {exp.description}
-                        </span>
-                        <button
-                          type="button"
-                          className={styles.badgeRemove}
-                          onClick={() => handleExpRemove(idx)}
-                        >
-                          &times;
-                        </button>
-                      </div>
-                    ))
-                  ) : (
-                    <span className={styles.fadedText}>No experience added</span>
-                  )}
-                </div>
-                <div className={styles.expForm}>
-                  <input
-                    type="text"
-                    name="title"
-                    value={expForm.title}
-                    onChange={handleExpChange}
-                    placeholder="Title"
-                  />
-                  <input
-                    type="text"
-                    name="company"
-                    value={expForm.company}
-                    onChange={handleExpChange}
-                    placeholder="Company"
-                  />
-                  <input
-                    type="number"
-                    name="years"
-                    value={expForm.years}
-                    onChange={handleExpChange}
-                    placeholder="Years"
-                    min="0"
-                  />
-                  <input
-                    type="text"
-                    name="description"
-                    value={expForm.description}
-                    onChange={handleExpChange}
-                    placeholder="Description (optional)"
-                  />
-                  <button
-                    type="button"
-                    className={styles.addBtn}
-                    onClick={handleExpAdd}
-                  >
-                    Add
-                  </button>
-                </div>
-                {expError && <div className={styles.error}>{expError}</div>}
-              </div>
+              <ExperienceSection
+                experience={experience}
+                expForm={expForm}
+                expError={expError}
+                onExpChange={handleExpChange}
+                onExpAdd={handleExpAdd}
+                onExpRemove={handleExpRemove}
+              />
               <div className={styles.btnGroup}>
                 <button
                   type="button"

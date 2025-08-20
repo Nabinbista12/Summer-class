@@ -1,12 +1,13 @@
+import { uploadBufferToCloudinary } from "../middleware/imageUploader.middleware.js";
 import User from "../model/user.model.js";
 
 export async function uploadProfilePicture(req, res) {
   try {
     if (!req.file) throw new Error("No file uploaded");
 
-    const result = await uploadProfilePicture(req.file.buffer, {
+    const result = await uploadBufferToCloudinary(req.file.buffer, {
       folder: "profilepic",
-      public_id: `user_#{req.user.id}`,
+      public_id: `user_${req.user.id}`,
       transformation: [
         { width: 1600, height: 1600, crop: "fill", gravity: "auto" },
         { quality: "auto", fetch_format: "auto" },
@@ -27,8 +28,8 @@ export async function uploadProfilePicture(req, res) {
     );
     res.json({ success: true, image: user.profilePicture });
   } catch (err) {
-    res.status(404).json({ message: "Error caught while throwing error" });
+    console.error(err); // shows actual error
+    res.status(500).json({ message: err.message });
+    // res.status(404).json({ message: "Error caught while throwing error" });
   }
 }
-
-

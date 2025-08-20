@@ -8,10 +8,8 @@ import {
   getAllUsersPublic,
 } from "../controller/user.controller.js";
 import { checkToken } from "../middleware/auth.middleware.js";
-import {
-  upload,
-  uploadButterToCloudinary,
-} from "../middleware/imageUploader.middleware.js";
+import { upload } from "../middleware/imageUploader.middleware.js";
+import { uploadProfilePicture } from "../controller/profilePicture.controller.js";
 
 const router = Router();
 
@@ -24,10 +22,10 @@ router.get("/user-info/:id", checkToken, userInfo);
 router.put("/user-info/:id", checkToken, updateUserProfile);
 
 router.post(
-  "/user/profile-picture",
+  "/profile-picture",
   checkToken,
   upload.single("image"),
-  uploadButterToCloudinary
+  uploadProfilePicture
 );
 
 // Public API to fetch all users for cards

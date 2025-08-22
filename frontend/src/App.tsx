@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, HashRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Zoom } from 'react-toastify';
@@ -21,7 +21,7 @@ import NotFound from "./Pages/NotFound/NotFound";
 function App() {
   return (
     <>
-      <Router>
+      <HashRouter>
         <Routes>
           <Route
             path="/"
@@ -66,7 +66,7 @@ function App() {
           <Route path="/careers" element={<Careers />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </Router>
+      </HashRouter>
       <ToastContainer
         position="top-right"
         autoClose={2000}

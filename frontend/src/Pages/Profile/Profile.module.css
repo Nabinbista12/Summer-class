@@ -4,23 +4,52 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f8fafc 0%, #e5e7eb 100%);
+  background: #ffffff; /* match Register background */
   padding: 2rem 1rem;
   position: relative;
+}
+
+/* profile-specific: stack content from top so it's not vertically centered under navbar */
+.profile .container {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* Header (brand + tagline) matching Register */
+.header {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #1a202c;
+}
+
+.brand {
+  font-size: 2rem;
+  font-weight: 800;
+  margin: 0;
+  letter-spacing: -0.02em;
+  background: linear-gradient(45deg, #4a47a3, #764ba2);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tagline {
+  font-size: 0.95rem;
+  color: #475569;
+  margin: 0.35rem 0 0 0;
 }
 
 .profileCard {
   width: 100%;
   max-width: 900px;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 1);
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 16px;
-  padding: 2.5rem;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  padding: 2.25rem;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
   display: grid;
-  gap: 2rem;
-  animation: fadeIn 0.5s ease-in-out;
+  gap: 1.5rem;
+  animation: fadeIn 0.45s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -41,6 +70,13 @@
   align-items: center;
   text-align: center;
   gap: 1rem;
+}
+
+/* make sure avatar has space and center alignment */
+.profilePicture {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0.8rem;
 }
 
 .profilePicture img {
@@ -144,24 +180,23 @@
 
 /* Edit Button */
 .editBtn {
-  background: #2b6cb0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: #fff;
   border: none;
-  padding: 0.75rem 2rem;
-  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   align-self: center;
-  margin-top: 1.5rem;
-  box-shadow: 0 4px 12px rgba(43, 108, 176, 0.2);
+  margin-top: 1rem;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25);
   transition: all 0.2s ease;
 }
 
 .editBtn:hover {
-  background: #2c5282;
-  box-shadow: 0 6px 16px rgba(43, 108, 176, 0.3);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(102, 126, 234, 0.28);
 }
 
 .editBtn:active {
@@ -254,15 +289,26 @@
 }
 
 .addBtn {
-  background: #2b6cb0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: #fff;
   border: none;
   border-radius: 10px;
-  padding: 0.75rem 1.5rem;
+  padding: 0.6rem 1rem;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+/* Upload label used by ProfilePictureUpload */
+.uploadLabel {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  display: inline-block;
 }
 
 .addBtn:hover {
@@ -330,6 +376,120 @@
   font-weight: 600;
 }
 
+/* Projects flip-card grid */
+.projectListSimple {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.projectItemSimple {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.6rem;
+}
+
+.projectThumb {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.projectThumbPlaceholder {
+  width: 120px;
+  height: 80px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f1f5f9;
+  color: #94a3b8;
+}
+
+.projectBody { flex: 1; }
+.projectDesc { color: #475569; margin: 0.25rem 0; }
+.projectLink { color: #4338ca; font-weight: 700; }
+
+/* Edit pill control */
+.editControl {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: #fff;
+  border: 1px solid rgba(15, 23, 42, 0.06);
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(41, 37, 72, 0.06);
+  cursor: pointer;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  font-weight: 700;
+  color: #1f2937;
+  justify-self: center;
+}
+
+.editControl:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(37, 99, 235, 0.12);
+}
+
+.editIcon {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border-radius: 50%;
+  flex: 0 0 34px;
+  font-size: 0.9rem;
+}
+
+.editLabel { font-size: 0.95rem; }
+
+/* Project card responsive sizing */
+@media (min-width: 1100px) {
+  .projectCard { height: 360px; }
+}
+
+.projectCard:focus .cardInner,
+.projectCard:hover .cardInner {
+  transform: rotateY(180deg);
+}
+
+.cardFront,
+.cardBack {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 26px rgba(15, 23, 42, 0.06);
+}
+
+.cardFront {
+  background: #fff;
+  z-index: 2;
+}
+
+.cardBack {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  color: #0f172a;
+  transform: rotateY(180deg);
+  padding: 1rem;
+}
+
+.projectCard img {
+  display: block;
+  width: 100%;
+}
+
 /* Remove Buttons */
 .badgeRemove {
   background: #e53e3e;
@@ -381,8 +541,9 @@
 }
 
 .saveBtn {
-  background: #2b6cb0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: #fff;
+  border-radius: 12px;
 }
 
 .saveBtn:hover {
@@ -391,8 +552,10 @@
 }
 
 .cancelBtn {
-  background: #e2e8f0;
-  color: #2d3748;
+  background: transparent;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
 }
 
 .cancelBtn:hover {
@@ -479,6 +642,13 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+/* Ensure the profile page content sits below the sticky navbar and above the footer */
+.profile {
+  padding-top: 4.25rem; /* clears navbar (navbar height is ~4rem) */
+  padding-bottom: 3.5rem; /* reserve space so footer appears after content */
+  box-sizing: border-box;
 }
 
 .container:has(.error),

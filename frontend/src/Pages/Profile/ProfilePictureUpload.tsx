@@ -8,23 +8,17 @@ interface Props {
 }
 
 export default function ProfilePictureUpload({ profilePictureUrl, onUploadSuccess }: Props) {
-  const [profilePicFile, setProfilePicFile] = useState<File | null>(null);
-  const [profilePicUploading, setProfilePicUploading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [uploading, setUploading] = useState(false);
+  const [message, setMessage] = useState("");
 
-  const handleProfilePicChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setProfilePicFile(e.target.files[0]);
-    }
-  };
-
-  const handleProfilePicUpload = async () => {
-    if (!profilePicFile) return;
-    setProfilePicUploading(true);
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setMessage("");
     try {
       const formData = new FormData();
-      formData.append("profilePicture", profilePicFile);
+      formData.append("image", file);
       const res = await axios.post(
         `http://localhost:3000/api/user/profile-picture`,
         formData,
@@ -37,13 +31,13 @@ export default function ProfilePictureUpload({ profilePictureUrl, onUploadSucces
       );
       if (res.data.image?.url) {
         onUploadSuccess(res.data.image);
-        setSuccess("Profile picture updated!");
-        setTimeout(() => setSuccess(""), 2000);
+        setMessage("Profile picture updated!");
+        setTimeout(() => setMessage(""), 2000);
       }
-    } catch (err: any) {
-      setError("Failed to upload profile picture.");
+    } catch (err) {
+      setMessage("Failed to upload profile picture.");
     } finally {
-      setProfilePicUploading(false);
+      setUploading(false);
     }
   };
 
@@ -55,24 +49,18 @@ export default function ProfilePictureUpload({ profilePictureUrl, onUploadSucces
         alt="profile img"
         style={{ width: "110px", height: "110px", borderRadius: "50%", objectFit: "cover", marginBottom: "0.7rem" }}
       />
-      <input
-        type="file"
-        id="profile-pic"
-        accept="image/png, image/jpeg"
-        onChange={handleProfilePicChange}
-        style={{ marginBottom: "0.7rem" }}
-      />
-      <button
-        type="button"
-        className={styles.addBtn}
-        onClick={handleProfilePicUpload}
-        disabled={profilePicUploading || !profilePicFile}
-        style={{ marginBottom: "0.7rem" }}
-      >
-        {profilePicUploading ? "Uploading..." : "Upload"}
-      </button>
-      {success && <div className={styles.successMsg}>{success}</div>}
-      {error && <div className={styles.error}>{error}</div>}
+
+      <label className={styles.uploadLabel} style={{ display: 'inline-block', marginTop: 8 }}>
+        <input
+          type="file"
+          accept="image/png, image/jpeg, image/webp"
+          onChange={handleFileSelect}
+          style={{ display: 'none' }}
+        />
+        {uploading ? 'Uploading...' : 'Upload Photo'}
+      </label>
+
+      {message && <div style={{ marginTop: 8 }}>{message}</div>}
     </div>
   );
 }

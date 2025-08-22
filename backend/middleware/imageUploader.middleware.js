@@ -6,10 +6,13 @@ export const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (_req, file, next) => {
-    const ok = ["image/png", "image/jpeg"].includes(file.mimetype);
-    console.log(ok);
-    
-    next(ok ? null : new Error("Only JPG and PNG allowed"), ok);
+    const accepted = ["image/png", "image/jpeg", "image/webp" ];
+    const ok = accepted.includes(file.mimetype);
+    console.log('upload middleware, file mimetype:', file.mimetype, 'accepted:', ok);
+    if (!ok) {
+      return next(new Error("Only JPG, PNG or WEBP allowed"), false);
+    }
+    return next(null, true);
   },
 });
 

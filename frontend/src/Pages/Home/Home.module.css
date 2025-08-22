@@ -138,8 +138,8 @@
   border-radius: 1.5rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%; /* fill the grid column */
-  max-width: 280px; /* max card width */
-  min-height: 200px;
+  max-width: 360px; /* larger card width */
+  min-height: 320px; /* larger card height */
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
@@ -153,6 +153,25 @@
 .searchCard:hover {
   transform: translateY(-5px);
   box-shadow: 0 15px 40px rgba(74, 71, 163, 0.4);
+}
+
+/* Flip-card wrapper */
+.projectPreviewList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.projectPreview {
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.6rem;
+  border: 1px solid #e6eefc;
+}
+
+.projectPreviewDesc {
+  color: #475569;
+  font-size: 0.9rem;
 }
 
 .profile {
@@ -236,4 +255,72 @@
   padding: 0.2rem 0.8rem;
   font-size: 0.9rem;
   font-weight: 500;
+}
+
+/* Flip card styles (Home only) */
+.cardFlip {
+  perspective: 1200px;
+  width: 100%;
+  height: 100%;
+}
+
+.cardInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.7s ease;
+}
+
+.searchCard:hover .cardInner {
+  transform: rotateY(180deg);
+}
+
+.cardFront,
+.cardBack {
+  backface-visibility: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.cardBack {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* filter card inserted in results */
+.filterCard {
+  width: 100%;
+  max-width: 900px;
+  background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.06));
+  border-radius: 1rem;
+  padding: 1rem 1.2rem;
+  box-shadow: 0 6px 20px rgba(74,71,163,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.filterInputs {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 8px;
+}
+
+.filterInputs input {
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  border: 1px solid #e6eefc;
+}
+
+.fadedText {
+  color: #9aa4b2;
 }

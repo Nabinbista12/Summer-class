@@ -46,7 +46,7 @@ export default function UserProfile() {
         <div className={styles.profileCard}>
           <img
             className={styles.profileAvatar}
-            src={`https://ui-avatars.com/api/?name=${user.username}&background=4a47a3&color=fff&size=128`}
+            src={user.profilePicture?.url || `https://ui-avatars.com/api/?name=${user.username}&background=4a47a3&color=fff&size=128`}
             alt={user.username}
           />
           <h2 className={styles.username}>{user.username}</h2>
@@ -105,6 +105,26 @@ export default function UserProfile() {
               </div>
             ) : (
               <span className={styles.fadedText}>No experience added</span>
+            )}
+          </div>
+
+          {/* --- Projects Section --- */}
+          <div className={styles.projectSection}>
+            <h3 className={styles.sectionTitle}>Projects</h3>
+            {user.projects && user.projects.length > 0 ? (
+              <div className={styles.projectList}>
+                {user.projects.map((p: any, i: number) => (
+                  <div key={i} className={styles.projectItem}>
+                    <strong className={styles.projectTitle}>{p.title || 'Untitled'}</strong>
+                    <div className={styles.projectDesc}>{p.description || ''}</div>
+                    {p.link && (
+                      <a href={p.link} target="_blank" rel="noreferrer" className={styles.projectLink}>View</a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <span className={styles.fadedText}>No projects added</span>
             )}
           </div>
         </div>

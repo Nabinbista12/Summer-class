@@ -76,7 +76,7 @@
 }
 
 .editBtn {
-  background: #2b6cb0;
+  background: linear-gradient(135deg, #667eea, #764ba2);
   color: #fff;
   border: none;
   padding: 0.75rem 2rem;
@@ -205,6 +205,33 @@
   line-height: 1.5;
   margin-top: 0.5rem;
 }
+
+/* Projects styling */
+.projectSection {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-top: 0.5rem;
+}
+
+.projectList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.75rem;
+}
+
+.projectItem {
+  background: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.9rem;
+}
+
+.projectTitle { font-weight: 700; }
+.projectDesc { color: #475569; font-size: 0.95rem; margin-top: 0.35rem; }
+.projectLink { color: #4338ca; font-weight: 700; margin-top: 0.5rem; display: inline-block; }
 
 /* Responsive Design */
 @media (max-width: 768px) {

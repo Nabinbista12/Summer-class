@@ -1,6 +1,11 @@
+import User from "../model/user.model.js";
+
 export const getAllUsersPublic = async (req, res) => {
   try {
-    const users = await User.find({}, "_id username email companyName bio skills experience");
+    const users = await User.find(
+      {},
+      "_id username email companyName bio skills experience projects profilePicture"
+    );
     return res.status(200).json({ users });
   } catch (err) {
     res.status(500).json({ message: "Error fetching users." });
@@ -15,12 +20,16 @@ export const updateUserProfile = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    return res.status(200).json({ message: "Profile edited successfully! Thank you for the edit.", user });
+    return res
+      .status(200)
+      .json({
+        message: "Profile edited successfully! Thank you for the edit.",
+        user,
+      });
   } catch (err) {
     res.status(500).json({ message: "Error updating user profile." });
   }
 };
-import User from "../model/user.model.js";
 
 export const check = (req, res) => {
   res.send("working");
@@ -64,7 +73,10 @@ export const getUser = async (req, res) => {
 export const userInfo = async (req, res) => {
   try {
     const { id } = req.params;
-    const user = await User.findById(id, "_id username email companyName bio skills experience");
+    const user = await User.findById(
+      id,
+      "_id username email companyName bio skills experience projects profilePicture"
+    );
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

@@ -1,9 +1,11 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { Zoom } from 'react-toastify';
+
 import Login from "./Feature/Login/Login";
 import Register from "./Feature/Register/Register";
-import Home from "./Pages/Home/Home";
-import Profile from "./Pages/Profile/Profile";
 
 import UserProfile from "./Pages/UserProfile/UserProfile";
 
@@ -11,8 +13,9 @@ import {
   LoginProtectedRoute,
   ProtectedRoute,
 } from "./Shared/Guard/ProtectedRoute";
-import Network from "./Pages/Network/Network";
 import Careers from "./Pages/Careers/Careers";
+import Home from "./Pages/Home/Home";
+import Profile from "./Pages/Profile/Profile";
 
 function App() {
   return (
@@ -59,17 +62,22 @@ function App() {
               </ProtectedRoute>
             }
           ></Route>
-          <Route
-            path="/mynetwork"
-            element={
-              <ProtectedRoute>
-                <Network />
-              </ProtectedRoute>
-            }
-          ></Route>
           <Route path="/careers" element={<Careers />} />
         </Routes>
       </Router>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        transition={Zoom}
+        theme="light"
+      />
     </>
   );
 }

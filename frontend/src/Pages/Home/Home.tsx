@@ -11,12 +11,18 @@ interface UserType {
   companyName?: string;
   bio?: string;
   skills?: string[];
+  profilePicture?: { url?: string };
+  projects?: { title?: string; description?: string; link?: string; imageUrl?: string }[];
 }
 
 export default function Home() {
   const navigate = useNavigate();
   const [users, setUsers] = useState<UserType[]>([]);
   const [search, setSearch] = useState("");
+  const [showFilters, setShowFilters] = useState(false);
+  const [collegeFilter, setCollegeFilter] = useState("");
+  const [skillsFilter, setSkillsFilter] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState<UserType[]>([]);
 
   const handleSearch = async (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -58,9 +64,53 @@ export default function Home() {
     getAllUsers();
   }, []);
 
+  // Apply client-side filters (college prioritized, then skill match count)
+  useEffect(() => {
+    if (!users || users.length === 0) {
+      setFilteredUsers([]);
+      return;
+    }
+
+    const collegeQ = collegeFilter.trim().toLowerCase();
+    const skillTokens = skillsFilter
+      .split(/[,\s]+/)
+      .map((s) => s.trim().toLowerCase())
+      .filter(Boolean);
+
+    if (!collegeQ && skillTokens.length === 0) {
+      setFilteredUsers(users);
+      return;
+    }
+
+    const scored = users.map((u) => {
+      const company = (u.companyName || "").toLowerCase();
+      const collegeMatch = collegeQ ? company.includes(collegeQ) : false;
+      const userSkills = (u.skills || []).map((s) => String(s).toLowerCase());
+      let skillMatches = 0;
+      for (const t of skillTokens) if (userSkills.includes(t)) skillMatches++;
+      return { u, collegeMatch, skillMatches };
+    });
+
+    // College matches first (sorted by skillMatches desc), then other skill matches, then rest
+    const primary = scored
+      .filter((s) => s.collegeMatch)
+      .sort((a, b) => b.skillMatches - a.skillMatches)
+      .map((s) => s.u);
+    const secondary = scored
+      .filter((s) => !s.collegeMatch && s.skillMatches > 0)
+      .sort((a, b) => b.skillMatches - a.skillMatches)
+      .map((s) => s.u);
+    const rest = scored
+      .filter((s) => !s.collegeMatch && s.skillMatches === 0)
+      .map((s) => s.u);
+
+    setFilteredUsers([...primary, ...secondary, ...rest]);
+  }, [users, collegeFilter, skillsFilter]);
+
   const handleCardClick = (id: string) => {
     navigate(`/user/${id}`);
   };
+  const displayList = filteredUsers.length > 0 ? filteredUsers : users;
 
   return (
     <div className={styles.homeContainer}>
@@ -79,53 +129,105 @@ export default function Home() {
         </div>
         <div className={styles.projectInfo}>
           <span>TalentCrew</span>
+          <div style={{ marginTop: 10 }}>
+            {/* retained tagline area; removed redundant filter button here per request */}
+          </div>
           Search Talent Recruiter
         </div>
       </div>
-      <div className={styles.filterBar}>
-        <p className={styles.result}>{users.length} result(s) found</p>
-        <button className={styles.filter}>Filter</button>
+  <div className={styles.filterBar}>
+    <p className={styles.result}>{users.length} result(s) found</p>
+    <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+      {!showFilters && (
+        <button className={styles.filter} onClick={() => setShowFilters(true)}>
+          Filter
+        </button>
+      )}
+    </div>
+    {showFilters && (
+      <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginTop: 6 }}>
+        <button className={styles.filter} onClick={() => { setCollegeFilter(''); setSkillsFilter(''); }} style={{ padding: '0.45rem 0.7rem' }}>
+          Clear
+        </button>
+        <input
+          placeholder="College name (priority)"
+          value={collegeFilter}
+          onChange={(e) => setCollegeFilter(e.target.value)}
+          style={{ padding: '0.45rem 0.65rem', borderRadius: 6, border: '1px solid #dbeafe', width: 200, maxWidth: '40vw' }}
+        />
+        <input
+          placeholder="Skills (comma separated)"
+          value={skillsFilter}
+          onChange={(e) => setSkillsFilter(e.target.value)}
+          style={{ padding: '0.45rem 0.65rem', borderRadius: 6, border: '1px solid #dbeafe', width: 200, maxWidth: '40vw' }}
+        />
+        <button className={styles.filter} onClick={() => setShowFilters(false)} style={{ marginLeft: 6 }}>
+          Hide filters
+        </button>
       </div>
+    )}
+  </div>
       <div className={styles.SearchResult}>
-        {users.length === 0 && (
+        {displayList.length === 0 ? (
           <p className={styles.noUsers}>No users found.</p>
-        )}
-        {users.map((val) => (
-          <div
-            className={styles.searchCard}
-            key={val._id}
-            onClick={() => handleCardClick(val._id)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") handleCardClick(val._id);
-            }}
-          >
-            <div className={styles.profile}>
-              <img
-                src={`https://ui-avatars.com/api/?name=${val.username}&background=4a47a3&color=fff&size=64`}
-                alt={`${val.username} profile`}
-              />
-              <div>
-                <h3 className={styles.name}>{val.username}</h3>
-                <p className={styles.companyName}>
-                  {val.companyName || "No company"}
-                </p>
+        ) : (
+          displayList.map((val) => (
+            <div
+              className={styles.searchCard}
+              key={val._id}
+              role="button"
+              tabIndex={0}
+              onClick={() => handleCardClick(val._id)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleCardClick(val._id);
+              }}
+            >
+              <div className={styles.cardFlip}>
+                <div className={styles.cardInner}>
+                  <div className={styles.cardFront}>
+                    <div className={styles.profile}>
+                      <img
+                        src={val.profilePicture?.url || `https://ui-avatars.com/api/?name=${val.username}&background=4a47a3&color=fff&size=64`}
+                        alt={`${val.username} profile`}
+                      />
+                      <div>
+                        <h3 className={styles.name}>{val.username}</h3>
+                        <p className={styles.companyName}>
+                          {val.companyName || "No company"}
+                        </p>
+                      </div>
+                    </div>
+                    <p>{val.bio || "No detail provided."}</p>
+                    {val.skills && val.skills.length > 0 && (
+                      <div className={styles.skillsBadgeList}>
+                        {val.skills.map((skill) => (
+                          <span key={skill} className={styles.skillsBadge}>
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className={styles.cardBack}>
+                    <h4 style={{ marginTop: 0 }}>Projects</h4>
+                    {val.projects && val.projects.length > 0 ? (
+                      <div className={styles.projectPreviewList}>
+                        {val.projects.map((p: any, i: number) => (
+                          <div key={i} className={styles.projectPreview}>
+                            <strong>{p.title}</strong>
+                            <div className={styles.projectPreviewDesc}>{p.description || ''}</div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className={styles.fadedText}>No projects added</div>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
-            <p>{val.bio || "No detail provided."}</p>
-            {/* Skills as badges */}
-            {val.skills && val.skills.length > 0 && (
-              <div className={styles.skillsBadgeList}>
-                {val.skills.map((skill) => (
-                  <span key={skill} className={styles.skillsBadge}>
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        ))}
+          ))
+        )}
       </div>
       <Footer />
     </div>

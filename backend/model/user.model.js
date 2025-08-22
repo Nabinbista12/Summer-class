@@ -1,6 +1,10 @@
 import { Schema, model } from "mongoose";
 
 const userSchema = new Schema({
+  fullName: {
+    type: String,
+    required: true,
+  },
   username: {
     type: String,
     required: true,
@@ -31,6 +35,14 @@ const userSchema = new Schema({
       company: { type: String, required: true },
       years: { type: Number, required: true },
       description: { type: String, default: "" },
+    },
+  ],
+  projects: [
+    {
+      title: { type: String, required: false },
+      description: { type: String, default: "" },
+      link: { type: String, default: "" },
+      imageUrl: { type: String, default: "" },
     },
   ],
   profilePicture: {

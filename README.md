@@ -14,7 +14,7 @@ this is the summer class project amkind hwile learning sumer clas frm the colelg
 
 ## Local development
 
-If you want to run the project locally, make sure to point the frontend at your local API. In this project the API base is defined in the frontend API file — if you are using the app locally, set the API to `dev` in the api file (for example: `frontend/src/Shared/api.tsx`) so the app uses your local backend.
+If you want to run the project locally, make sure to point the frontend at your local API. In this project the API base is defined in the frontend API file — if you are using the app locally, set the API to `dev` in the API_BASE file so the app uses your local backend.
 
 Typical steps (PowerShell):
 

@@ -55,7 +55,7 @@ export default function UserProfile() {
             <strong>Email:</strong> {user.email}
           </p>
           <p className={styles.company}>
-            <strong>Company:</strong> {user.companyName || "No company"}
+            <strong>College:</strong> {user.companyName || "No company"}
           </p>
           <p className={styles.bio}>{user.bio || "No detail provided."}</p>
 

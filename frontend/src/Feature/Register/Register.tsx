@@ -217,7 +217,7 @@ export default function Register() {
           </div>
 
           <div className={styles.inputGroup}>
-            <label className={styles.label}>Company Name</label>
+            <label className={styles.label}>College Name</label>
             <input className={styles.input} {...register("companyName")} />
           </div>
 

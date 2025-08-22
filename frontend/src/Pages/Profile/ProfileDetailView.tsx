@@ -42,7 +42,7 @@ export default function ProfileDetailView({ user, onEdit }: Props) {
         </div>
       </div>
       <p>
-        <strong>Company Name:</strong>{" "}
+        <strong>College Name:</strong>{" "}
         {user.companyName || (
           <span style={{ color: "#aaa" }}>Not set</span>
         )}

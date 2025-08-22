@@ -15,7 +15,7 @@ export default function ProfileForm({ editData, onChange, projects, projectForm,
   return (
     <>
       <div className={styles.formField}>
-        <label htmlFor="companyName">Company Name</label>
+        <label htmlFor="companyName">College Name</label>
         <input
           type="text"
           name="companyName"

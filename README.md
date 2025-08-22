@@ -38,13 +38,13 @@ This project helped me **learn full-stack development**, including React, Node.j
 ## 🖼️ Screenshots / Demo
 
 ### Home page
-![Homepage](frontend\public\images\home.png)
+![Homepage](https://github.com/Nabinbista12/Summer-class/blob/main/frontend/public/images/home.png)
 
 ### Profile Page
-![Profile Search](frontend\public\images\profile.png)
+![Profile Search](https://github.com/Nabinbista12/Summer-class/blob/main/frontend/public/images/profile.png)
 
 ### Skill Badge
-![Skill Badges](frontend\public\images\skillcard.png)  
+![Skill Badges](https://github.com/Nabinbista12/Summer-class/blob/main/frontend/public/images/skillcard.png)  
 
 
 ---

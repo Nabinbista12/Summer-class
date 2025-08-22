@@ -2,8 +2,8 @@
 
 // change to 'production' for deployed environment
 
-// const mode = 'development'; 
-const mode = 'production';
+const mode = 'development'; 
+// const mode = 'production';
 
 const dev = {
   API_BASE: "http://localhost:5173",

@@ -38,13 +38,13 @@ This project helped me **learn full-stack development**, including React, Node.j
 ## 🖼️ Screenshots / Demo
 
 ### Home page
-![Homepage](image.png)
+![Homepage](frontend\public\images\home.png)
 
 ### Profile Page
-![Profile Search](image-3.png)
+![Profile Search](frontend\public\images\profile.png)
 
 ### Skill Badge
-![Skill Badges](image-2.png)  
+![Skill Badges](frontend\public\images\skillcard.png)  
 
 
 ---

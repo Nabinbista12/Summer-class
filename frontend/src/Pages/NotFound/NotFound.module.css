@@ -1,0 +1,43 @@
+.container {
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+  text-align: center;
+}
+.card h1 {
+  font-size: 3rem;
+  margin: 0;
+}
+.card p {
+  margin: 0.5rem 0 1.2rem;
+  color: #666;
+}
+.actions {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+}
+.btn {
+  background: transparent;
+  border: 1px solid #4a47a3;
+  color: #4a47a3;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+}
+.btnPrimary {
+  background: #4a47a3;
+  color: white;
+  border: none;
+  padding: 0.5rem 0.9rem;
+  border-radius: 0.6rem;
+  cursor: pointer;
+}

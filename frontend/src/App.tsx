@@ -16,6 +16,7 @@ import {
 import Careers from "./Pages/Careers/Careers";
 import Home from "./Pages/Home/Home";
 import Profile from "./Pages/Profile/Profile";
+import NotFound from "./Pages/NotFound/NotFound";
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
             }
           ></Route>
           <Route path="/careers" element={<Careers />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
       <ToastContainer

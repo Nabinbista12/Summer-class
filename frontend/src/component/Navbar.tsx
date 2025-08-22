@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 
 import styles from "./Navbar.module.css";
+import { Bounce, toast } from "react-toastify";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -16,7 +17,18 @@ export default function Navbar() {
         const decoded = jwtDecode<{ username: string }>(token);
         setUsername(decoded.username);
       } catch (err) {
-        console.log("invalid token");
+        // console.log("invalid token");
+        toast.error("Please login again.", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       }
     }
   }, []);

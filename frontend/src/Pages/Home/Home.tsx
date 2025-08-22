@@ -5,6 +5,7 @@ import Navbar from "../../component/Navbar";
 import Footer from "../../component/Footer";
 import axios from "axios";
 import { API_BASE } from "../../config/URLAPI";
+import { Bounce, toast } from "react-toastify";
 
 interface UserType {
   _id: string;
@@ -45,7 +46,7 @@ export default function Home() {
         setUsers([]);
       }
     } catch (err) {
-      console.log("Search error", err);
+      // console.log("Search error", err);
       setUsers([]);
     }
   };
@@ -55,7 +56,18 @@ export default function Home() {
   const res = await axios.get(`${API_BASE}/api/user/public-users`);
       setUsers(res.data.users);
     } catch (err) {
-      console.log("Error occurred while fetching all users", err);
+      toast.error("Server Error. Please Try again.", {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      // console.log("Error occurred while fetching all users", err);
     }
   };
 

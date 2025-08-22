@@ -58,7 +58,7 @@ export default function Login() {
     try {
       setLoading(true);
       const result = await LoginAPI(fieldData);
-      console.log(result);
+      // console.log(result);
       if (result) {
         toast.success(result.message || 'Login successful', {
           position: "top-right",
@@ -91,7 +91,7 @@ export default function Login() {
         password: "",
       });
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       const message = (err as any)?.response?.data?.message || 'Login failed. Please try again.';
       toast.error(message, {
         position: "top-right",

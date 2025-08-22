@@ -128,7 +128,7 @@
   max-width: 1200px; /* wider container */
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
+  gap: 1rem;
   padding: 0 1rem;
   justify-items: center; /* center cards inside each grid cell */
 }
@@ -138,12 +138,12 @@
   border-radius: 1.5rem;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%; /* fill the grid column */
-  max-width: 360px; /* larger card width */
-  min-height: 320px; /* larger card height */
-  padding: 1.5rem;
+  max-width: 420px; /* slightly wider card */
+  min-height: 300px; /* slightly shorter card */
+  padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.6rem;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: black;
@@ -165,19 +165,26 @@
 .projectPreview {
   background: #fff;
   border-radius: 8px;
-  padding: 0.6rem;
+  padding: 0.4rem;
   border: 1px solid #e6eefc;
 }
 
 .projectPreviewDesc {
   color: #475569;
   font-size: 0.9rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
 
 .profile {
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 0.6rem;
 }
 
 .profile img {
@@ -208,6 +215,12 @@
   font-size: 1rem;
   color: #333;
   flex-grow: 1;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .btn {
@@ -241,10 +254,19 @@
 
 /* Skills badge list on user card */
 .skillsBadgeList {
-  margin-top: 0.5rem;
+  margin-top: auto;
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem;
+}
+
+/* See more projects link shown under project previews */
+.seeMore {
+  text-align: center;
+  color: #4a47a3;
+  font-weight: 700;
+  margin-top: 0.4rem;
+  cursor: pointer;
 }
 
 /* Individual skill badge */
@@ -284,8 +306,10 @@
   top: 0;
   width: 100%;
   height: 100%;
-  padding: 1.5rem;
+  padding: 1rem;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 .cardBack {

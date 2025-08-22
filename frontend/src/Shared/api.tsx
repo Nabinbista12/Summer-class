@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_BASE } from "../config/URLAPI";
 
 // export const LoginAPI = (formData: { username: String; password: String }) => {
 //   try {
@@ -17,10 +18,7 @@ export const LoginAPI = async (formData: {
   password: string;
 }) => {
   try {
-    const res = await axios.post(
-      "http://localhost:3000/api/auth/login",
-      formData
-    );
+  const res = await axios.post(`${API_BASE}/api/auth/login`, formData);
 
     localStorage.setItem("jwt", res.data.userToken);
     localStorage.setItem("isLoggedIn", "true");
@@ -37,7 +35,7 @@ export const LoginAPI = async (formData: {
 export const RegisterAPI = (formData: FormData) => {
   try {
     // Let axios set Content-Type (with boundary) automatically
-    return axios.post("http://localhost:3000/api/auth/register", formData, {
+  return axios.post(`${API_BASE}/api/auth/register`, formData, {
       withCredentials: true,
     });
   } catch (err) {

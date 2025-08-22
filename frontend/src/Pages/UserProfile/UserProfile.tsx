@@ -2,6 +2,7 @@ import styles from "./UserProfile.module.css";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_BASE } from "../../config/URLAPI";
 import Navbar from "../../component/Navbar";
 import Footer from "../../component/Footer";
 
@@ -17,7 +18,7 @@ export default function UserProfile() {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/user/user-info/${id}`,
+          `${API_BASE}/api/user/user-info/${id}`,
           {
             headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
           }

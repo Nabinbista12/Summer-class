@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { API_BASE } from "../../config/URLAPI";
 
 export function useProfileLogic(loggedInId: string | null) {
   const [user, setUser] = useState<any>(null);
@@ -34,7 +35,7 @@ export function useProfileLogic(loggedInId: string | null) {
       setLoading(true);
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/user/user-info/${profileId}`,
+          `${API_BASE}/api/user/user-info/${profileId}`,
           {
             headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` },
           }
@@ -74,7 +75,7 @@ export function useProfileLogic(loggedInId: string | null) {
     try {
       setLoading(true);
       await axios.put(
-        `http://localhost:3000/api/user/user-info/${loggedInId}`,
+        `${API_BASE}/api/user/user-info/${loggedInId}`,
         { ...editData, skills, experience, projects },
         { headers: { Authorization: `Bearer ${localStorage.getItem("jwt")}` } }
       );

@@ -3,6 +3,7 @@ import Navbar from "../../component/Navbar";
 import Footer from "../../component/Footer";
 import styles from "./SkillsExplorer.module.css";
 import axios from "axios";
+import { API_BASE } from "../../config/URLAPI";
 
 export default function SkillsExplorer() {
   const [skills, setSkills] = useState<string[]>([]);
@@ -11,14 +12,14 @@ export default function SkillsExplorer() {
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/user/skills").then(res => {
+  axios.get(`${API_BASE}/api/user/skills`).then(res => {
       setSkills(res.data.skills);
     });
   }, []);
 
   const handleSkillClick = (skill: string) => {
     setSelectedSkill(skill);
-    axios.get(`http://localhost:3000/api/user/skills/${skill}`).then(res => {
+  axios.get(`${API_BASE}/api/user/skills/${skill}`).then(res => {
       setUsers(res.data.users);
     });
   };

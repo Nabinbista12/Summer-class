@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Profile.module.css";
 import axios from "axios";
+import { API_BASE } from "../../config/URLAPI";
 
 interface Props {
   profilePictureUrl?: string;
@@ -20,7 +21,7 @@ export default function ProfilePictureUpload({ profilePictureUrl, onUploadSucces
       const formData = new FormData();
       formData.append("image", file);
       const res = await axios.post(
-        `http://localhost:3000/api/user/profile-picture`,
+  `${API_BASE}/api/user/profile-picture`,
         formData,
         {
           headers: {

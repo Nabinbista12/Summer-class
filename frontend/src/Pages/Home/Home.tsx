@@ -4,6 +4,7 @@ import styles from "./Home.module.css";
 import Navbar from "../../component/Navbar";
 import Footer from "../../component/Footer";
 import axios from "axios";
+import { API_BASE } from "../../config/URLAPI";
 
 interface UserType {
   _id: string;
@@ -35,7 +36,7 @@ export default function Home() {
 
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/user/search?search=${value}`
+        `${API_BASE}/api/user/search?search=${value}`
       );
 
       if (res.data.users) {
@@ -51,9 +52,7 @@ export default function Home() {
 
   const getAllUsers = async () => {
     try {
-      const res = await axios.get(
-        "http://localhost:3000/api/user/public-users"
-      );
+  const res = await axios.get(`${API_BASE}/api/user/public-users`);
       setUsers(res.data.users);
     } catch (err) {
       console.log("Error occurred while fetching all users", err);
@@ -111,6 +110,13 @@ export default function Home() {
     navigate(`/user/${id}`);
   };
   const displayList = filteredUsers.length > 0 ? filteredUsers : users;
+
+  const truncateWords = (text?: string, maxWords = 10) => {
+    if (!text) return "";
+    const words = String(text).split(/\s+/).filter(Boolean);
+    if (words.length <= maxWords) return words.join(" ");
+    return words.slice(0, maxWords).join(" ") + "...";
+  };
 
   return (
     <div className={styles.homeContainer}>
@@ -198,30 +204,51 @@ export default function Home() {
                       </div>
                     </div>
                     <p>{val.bio || "No detail provided."}</p>
-                    {val.skills && val.skills.length > 0 && (
-                      <div className={styles.skillsBadgeList}>
-                        {val.skills.map((skill) => (
-                          <span key={skill} className={styles.skillsBadge}>
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+
+                      {val.skills && val.skills.length > 0 && (
+                        <div className={styles.skillsBadgeList}>
+                          {(() => {
+                            const maxSkills = 6;
+                            const visible = (val.skills || []).slice(0, maxSkills);
+                            return (
+                              <>
+                                {visible.map((skill: any, idx: number) => (
+                                  <span key={skill + idx} className={styles.skillsBadge}>
+                                    {skill}
+                                  </span>
+                                ))}
+                                {val.skills.length > maxSkills && (
+                                  <span className={styles.skillsBadge}>+{val.skills.length - maxSkills}</span>
+                                )}
+                              </>
+                            );
+                          })()}
+                        </div>
+                      )}
                   </div>
                   <div className={styles.cardBack}>
                     <h4 style={{ marginTop: 0 }}>Projects</h4>
-                    {val.projects && val.projects.length > 0 ? (
-                      <div className={styles.projectPreviewList}>
-                        {val.projects.map((p: any, i: number) => (
-                          <div key={i} className={styles.projectPreview}>
-                            <strong>{p.title}</strong>
-                            <div className={styles.projectPreviewDesc}>{p.description || ''}</div>
+                      {val.projects && val.projects.length > 0 ? (
+                        <div>
+                          <div className={styles.projectPreviewList}>
+                            {val.projects.slice(0, 3).map((p: any, i: number) => (
+                              <div key={i} className={styles.projectPreview}>
+                                <strong>{p.title}</strong>
+                                <div className={styles.projectPreviewDesc}>
+                                  {p.link ? truncateWords(p.link, 10) : truncateWords(p.description || '', 12)}
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className={styles.fadedText}>No projects added</div>
-                    )}
+                          {val.projects.length > 3 && (
+                            <div className={styles.seeMore} onClick={(e) => { e.stopPropagation(); navigate(`/user/${val._id}`); }}>
+                              See more projects
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        <div className={styles.fadedText}>No projects added</div>
+                      )}
                   </div>
                 </div>
               </div>
